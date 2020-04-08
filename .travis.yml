@@ -7,3 +7,19 @@ before_install:
 
 script:
     - docker run -e CI=true mariamjamal32/docker-react npm run test
+
+deploy:
+    provider: elasticbeanstalk
+    # where you actually created your EB instance, copy the one inside your URL of EB
+    region: "us-east-2"
+    app: "docker-react"
+    env: "DockerReact-env"
+    # search for s3 from services and select the one with your region in it
+    bucket_name: "elasticbeanstalk-us-east-2-481682366415"
+    # going to be created only after the first deployment
+    bucket_path: "docker-react"
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: 
+        secure: "$AWS_SECRET_KEY"
